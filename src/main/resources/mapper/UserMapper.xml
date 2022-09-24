@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taoism.discipline.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.taoism.discipline.entity.UserEntity" >
+	<id column="uid" property="uid" jdbcType="INTEGER" />
+	<result column="nickname" property="nickname" jdbcType="VARCHAR" />
+	<result column="openid" property="openid" jdbcType="VARCHAR" />
+	<result column="token" property="token" jdbcType="VARCHAR" />
+	<result column="gender" property="gender" jdbcType="VARCHAR" />
+	<result column="city" property="city" jdbcType="VARCHAR" />
+	<result column="avatar_base64" property="avatarBase64" jdbcType="VARCHAR" />
+	<result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+	<result column="reg_date" property="regDate" jdbcType="DATE" />
+	<result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="selectByUid" resultMap="BaseResultMap">
+    select * from t_user where uid = #{uid}
+  </select>
+
+  <select id="selectByOpenid" resultMap="BaseResultMap">
+    select * from t_user where openid = #{openid} limit 1
+  </select>
+  
+  <select id="selectCountByOpenid" resultType="java.lang.Integer">
+    select count(*) from t_user where openid = #{openid}
+  </select>
+
+  <insert id="insert" parameterType="com.taoism.discipline.entity.UserEntity">
+    insert into t_user(openid, token, nickname, gender, city, avatar_base64, phone_num, reg_date, status)
+    values (#{openid, jdbcType=VARCHAR},
+            #{token, jdbcType=VARCHAR},
+            #{nickname, jdbcType=VARCHAR},
+            #{gender, jdbcType=VARCHAR},
+            #{city, jdbcType=VARCHAR},
+            #{avatarBase64, jdbcType=VARCHAR},
+            #{phoneNum, jdbcType=VARCHAR},
+            #{regDate, jdbcType=DATE},
+            #{status, jdbcType=INTEGER})
+  </insert>
+
+  <update id="updateUserNickname" parameterType="com.taoism.discipline.entity.UserEntity">
+      update t_user set avatar_base64 = #{avatarBase64}, nickname = #{nickname}  where openid = #{openid}
+  </update>
+
+</mapper>

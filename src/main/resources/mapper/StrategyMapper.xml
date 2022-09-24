@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taoism.discipline.mapper.StrategyMapper" >
+  <resultMap id="BaseResultMap" type="com.taoism.discipline.entity.StrategyEntity" >
+	<id column="id" property="id" jdbcType="INTEGER" />
+	<result column="date" property="date" jdbcType="DATE" />
+	<result column="precept_ids" property="preceptIds" jdbcType="VARCHAR" />
+	<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+	<result column="create_by" property="createBy" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectByDate" resultMap="BaseResultMap">
+    select * from t_strategy where date = #{date}
+  </select>
+
+  <insert id="insert" parameterType="com.taoism.discipline.entity.StrategyEntity">
+    insert into t_strategy(date, precept_ids, create_date, create_by)
+    values (#{date, jdbcType=DATE},
+            #{precept_ids, jdbcType=VARCHAR},
+            #{create_date, jdbcType=TIMESTAMP},
+            #{create_by, jdbcType=VARCHAR}
+  </insert>
+
+</mapper>
