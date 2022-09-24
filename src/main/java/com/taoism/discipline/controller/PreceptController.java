@@ -22,13 +22,13 @@ public class PreceptController {
     @Autowired
     StrategyService strategyService;
 
-    @GetMapping("/precepts/all/{token}")
-    public List<PreceptEntity> getAllPreceptss(@PathVariable("token") String token) {
+    @GetMapping("/precepts/all")
+    public List<PreceptEntity> getAllPreceptss(@RequestHeader(value = "token") String token) {
         return preceptService.selectAll();
     }
     
-    @GetMapping("/precepts/today/{token}")
-    public List<PreceptEntity> getPreceptsForToday(@PathVariable("token") String token) {
+    @GetMapping("/precepts/today")
+    public List<PreceptEntity> getPreceptsForToday(@RequestHeader(value = "token") String token) {
     	return preceptService.preceptsForToday();
     }
 

@@ -26,7 +26,7 @@ public class RegisterController {
     @Resource(name = "vxapiVerificationCache")
 	private Cache<String, VxapiVerificationInfo> vxapiVerificationCache;
     
-    @GetMapping("/register/{code}")
+    @GetMapping("/register")
     public UserInfo register(@PathVariable("code") String code) {
     	
     	UserEntity userEntity = new UserEntity();

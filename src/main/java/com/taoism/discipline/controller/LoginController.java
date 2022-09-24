@@ -18,8 +18,8 @@ public class LoginController {
     @Autowired
     LoginService loginService;
     
-    @GetMapping("/login/{token}")
-    public UserEntity login(@PathVariable("token") String token) {
+    @GetMapping("/login")
+    public UserEntity login(@RequestHeader(value = "token") String token) {
     	
     	UserEntity userEntity = new UserEntity();
     	

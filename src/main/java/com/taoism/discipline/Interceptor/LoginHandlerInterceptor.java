@@ -14,10 +14,11 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //System.out.println("访问controller之前调用");
-        String[] array = request.getRequestURL().toString().split("/");
-        String token = array[array.length-1];
+//        String[] array = request.getRequestURL().toString().split("/");
+//        String token = array[array.length-1];
+        String token = request.getHeader("token");
         //如果没有Token，则不能验证通过
-        if(null == TokenUtil.getOpenid(token)) {
+        if(token.isBlank() || null == TokenUtil.getOpenid(token)) {
         	return false;
         }
         
