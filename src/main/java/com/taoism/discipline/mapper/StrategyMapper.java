@@ -1,6 +1,6 @@
 package com.taoism.discipline.mapper;
 
-import java.util.Date;
+import java.sql.Date;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

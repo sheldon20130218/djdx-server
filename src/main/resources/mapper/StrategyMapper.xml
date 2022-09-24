@@ -10,7 +10,7 @@
   </resultMap>
 
   <select id="selectByDate" resultMap="BaseResultMap">
-    select * from t_strategy where date = #{date}
+    select * from t_strategy where date = #{date,jdbcType=DATE}
   </select>
 
   <insert id="insert" parameterType="com.taoism.discipline.entity.StrategyEntity">

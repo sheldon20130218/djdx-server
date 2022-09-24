@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taoism.discipline.mapper.PreceptClockinMapper">
+  <resultMap id="BaseResultMap" type="com.taoism.discipline.entity.PreceptClockinEntity">
+    <id column="clockin_id" jdbcType="BIGINT" property="clockinId" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="precept_ids" jdbcType="VARCHAR" property="preceptIds" />
+    <result column="precept_data_type" jdbcType="VARCHAR" property="preceptDataType" />
+    <result column="clockin_date" jdbcType="TIMESTAMP" property="clockinDate" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    clockin_id, openid, precept_ids, precept_data_type, clockin_date
+  </sql>
+  
+  <select id="selectListByParams" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_precept_clockin
+      where clockin_date=#{clockinDate,jdbcType=DATE} and openid = #{openid,jdbcType=VARCHAR}
+      order by clockin_id desc
+  </select>
+
+  <delete id="deleteByParams">
+    delete from t_precept_clockin
+    where openid = #{openid,jdbcType=VARCHAR} and clockin_date = #{clockinDate,jdbcType=VARCHAR}
+  </delete>
+  
+   <delete id="delete">
+    delete from t_precept_clockin
+    where openid = #{openid,jdbcType=VARCHAR} and clockin_date = #{clockinDate,jdbcType=VARCHAR} and precept_data_type = #{preceptDataType,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.taoism.discipline.entity.PreceptClockinEntity">
+    insert into t_precept_clockin (openid, precept_ids, precept_data_type, clockin_date)
+    values (#{openid,jdbcType=VARCHAR}, #{preceptIds,jdbcType=VARCHAR}, #{preceptDataType,jdbcType=VARCHAR},
+     #{clockinDate,jdbcType=DATE})
+  </insert>
+  
+</mapper>

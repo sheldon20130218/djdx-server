@@ -83,7 +83,7 @@
 	from t_precept
   </select>
   
-  <select id="selectByPreceptIds" parameterType="Integer[]" resultMap="BaseResultMap">
+  <select id="selectByPreceptIds" parameterType="Long[]" resultMap="BaseResultMap">
   	select
   	<include refid="Base_Column_List" />
   	from t_precept 

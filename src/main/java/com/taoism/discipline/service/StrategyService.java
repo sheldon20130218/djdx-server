@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.taoism.discipline.entity.StrategyEntity;
 import com.taoism.discipline.mapper.StrategyMapper;
+import com.taoism.discipline.utils.DateUtil;
 
 import java.util.Date;
 
@@ -25,7 +26,7 @@ public class StrategyService {
     }
 
     public StrategyEntity selectByDate(Date date){
-        return strategyMapper.selectByDate(date);
+        return strategyMapper.selectByDate(DateUtil.toSqlDate(date));
     }
 
 }

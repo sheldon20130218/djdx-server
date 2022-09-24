@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.taoism.discipline.entity.LoginEntity;
 import com.taoism.discipline.mapper.LoginMapper;
 import com.taoism.discipline.serviceimpl.LoginImpl;
-import com.taoism.discipline.utils.TokenUtil;
 
 import java.util.Date;
 import java.util.List;

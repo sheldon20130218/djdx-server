@@ -12,5 +12,5 @@ public interface PreceptMapper {
 	
 	List<PreceptEntity> selectAll();
 	
-	List<PreceptEntity> selectByPreceptIds(Integer[] preceptIds);
+	List<PreceptEntity> selectByPreceptIds(Long[] preceptIds);
 }

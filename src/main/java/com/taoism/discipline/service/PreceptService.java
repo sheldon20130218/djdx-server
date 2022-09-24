@@ -45,9 +45,9 @@ public class PreceptService {
 		}else {
 			String str = strategyEntity.getPreceptIds().replace("[", "").replace("]", "");
 			String[] strArray = str.split(",");
-			Integer[] preceptIds = new Integer[strArray.length];
+			Long[] preceptIds = new Long[strArray.length];
 			for(int i=0;i<strArray.length;i++) {
-				preceptIds[i] = Integer.parseInt(strArray[i]);
+				preceptIds[i] = Long.parseLong(strArray[i]);
 			}
 			
 			List<PreceptEntity> list = preceptMapper.selectByPreceptIds(preceptIds);
