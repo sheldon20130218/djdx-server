@@ -1,6 +1,6 @@
 package com.taoism.discipline.controller;
 
-import com.taoism.discipline.entity.UserEntity;
+import com.taoism.discipline.model.UserInfo;
 import com.taoism.discipline.service.LoginService;
 import com.taoism.discipline.service.UserService;
 import com.taoism.discipline.utils.TokenUtil;
@@ -19,19 +19,19 @@ public class LoginController {
     LoginService loginService;
     
     @GetMapping("/login")
-    public UserEntity login(@RequestHeader(value = "token") String token) {
+    public UserInfo login(@RequestHeader(value = "token") String token) {
     	
-    	UserEntity userEntity = new UserEntity();
+    	UserInfo info = new UserInfo();
     	
 		String openid = TokenUtil.getOpenid(token);
 		if(openid == null) {
-			return userEntity;
+			return info;
 		}else {
-			userEntity = userService.selectByOpenid(openid);
+			info = userService.selectByOpenid(openid);
 			//登陆表记录一下
 			loginService.insert(openid);
 		}    	
-    	return userEntity;
+    	return info;
     }
 
 }

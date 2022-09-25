@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taoism.discipline.entity.UserEntity;
 import com.taoism.discipline.model.UserInfo;
 import com.taoism.discipline.service.UserService;
+import com.taoism.discipline.utils.TokenUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -19,8 +19,17 @@ public class UserController {
 	
 	@PostMapping("/user/modifyUserNickname")
 	public UserInfo modifyUserNickname(@RequestHeader(value = "token") String token,String nickname,String avatarBase64) {
+		String openid = TokenUtil.getOpenid(token);
+		UserInfo info = userService.modifyUserNickname(openid,nickname,avatarBase64);
 		
-		UserEntity entity = userService.modifyUserNickname(token,nickname,avatarBase64);
-		return new UserInfo(entity);
+		return info;
+	}
+	
+	@PostMapping("/user/findUserInfo")
+	public UserInfo findUserInfo(@RequestHeader(value = "token") String token) {
+		String openid = TokenUtil.getOpenid(token);
+		UserInfo info = userService.selectUserInfo(openid);
+		
+		return info;
 	}
 }

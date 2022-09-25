@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.taoism.discipline.model.ClockinInfo;
 import com.taoism.discipline.model.PreceptClockin;
 import com.taoism.discipline.service.ClockinService;
-import com.taoism.discipline.utils.DateUtil;
 import com.taoism.discipline.utils.TokenUtil;
 
 

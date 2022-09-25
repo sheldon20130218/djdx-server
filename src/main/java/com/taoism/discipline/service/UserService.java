@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.taoism.discipline.entity.UserEntity;
+import com.taoism.discipline.entity.UserExtensionEntity;
+import com.taoism.discipline.mapper.UserExtensionMapper;
 import com.taoism.discipline.mapper.UserMapper;
+import com.taoism.discipline.model.UserInfo;
 import com.taoism.discipline.serviceimpl.UserImpl;
 import com.taoism.discipline.utils.TokenUtil;
 
@@ -17,9 +20,13 @@ public class UserService implements UserImpl {
 
     @Autowired
     UserMapper userMapper;
+    
+    @Autowired
+    UserExtensionMapper userExtensionMapper;
 
     @Override
-    public UserEntity register(String openid){
+    public UserInfo register(String openid){
+    	
         // 查询当前用户在数据库中是否存在，不存在则插入新数据
         if(userMapper.selectCountByOpenid(openid) < 1){
         	UserEntity entity = new UserEntity();
@@ -29,9 +36,17 @@ public class UserService implements UserImpl {
 			entity.setToken(TokenUtil.getToken(openid));
 			entity.setStatus(1);//激活状态
             userMapper.insert(entity);
+            
+            UserExtensionEntity userExtensionEntity = new UserExtensionEntity();
+            userExtensionEntity.setOpenid(openid);
+            userExtensionEntity.setCreateDate(new Date());
+            userExtensionEntity.setCreateBy(openid);
+            userExtensionMapper.insert(userExtensionEntity);
         }
+        UserEntity userEntity = userMapper.selectByOpenid(openid);
+        UserExtensionEntity userExtensionEntity = userExtensionMapper.selectByOpenid(openid);
         
-        return userMapper.selectByOpenid(openid);
+        return new UserInfo(userEntity,userExtensionEntity);
     }
 
     
@@ -40,8 +55,10 @@ public class UserService implements UserImpl {
     }
 
     @Override
-    public UserEntity selectByOpenid(String openid){
-        return userMapper.selectByOpenid(openid);
+    public UserInfo selectByOpenid(String openid){
+    	UserEntity userEntity = userMapper.selectByOpenid(openid);
+    	UserExtensionEntity userExtensionEntity = userExtensionMapper.selectByOpenid(openid);
+        return new UserInfo(userEntity,userExtensionEntity);
     }
     
     @Override
@@ -50,13 +67,21 @@ public class UserService implements UserImpl {
     }
 
 	@Override
-	public UserEntity modifyUserNickname(String token, String nickname, String avatarBase64) {
-		String openid = TokenUtil.getOpenid(token);
+	public UserInfo modifyUserNickname(String openid, String nickname, String avatarBase64) {
 		UserEntity entity = userMapper.selectByOpenid(openid);
 		entity.setNickname(nickname);
 		entity.setAvatarBase64(avatarBase64);
 		userMapper.updateUserNickname(entity);
 		
-		return entity;
+		UserExtensionEntity userExtensionEntity = userExtensionMapper.selectByOpenid(openid);
+		
+		return new UserInfo(entity,userExtensionEntity);
+	}
+
+
+	public UserInfo selectUserInfo(String openid) {
+		UserEntity entity = userMapper.selectByOpenid(openid);
+		UserExtensionEntity userExtensionEntity = userExtensionMapper.selectByOpenid(openid);
+		return new UserInfo(entity,userExtensionEntity);
 	}
 }

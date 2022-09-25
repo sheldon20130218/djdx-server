@@ -1,15 +1,18 @@
 package com.taoism.discipline.serviceimpl;
 
 import com.taoism.discipline.entity.UserEntity;
+import com.taoism.discipline.model.UserInfo;
 
 public interface UserImpl {
 	
-	UserEntity register(String openid);
+	UserInfo register(String openid);
 	
 	Integer selectCountByOpenid(String openid);
 	
-	UserEntity selectByOpenid(String openid);
+	UserInfo selectByOpenid(String openid);
 
-	UserEntity modifyUserNickname(String token, String nickname, String avatarBase64);
+	UserInfo modifyUserNickname(String openid, String nickname, String avatarBase64);
+	
+	UserInfo selectUserInfo(String openid);
 
 }

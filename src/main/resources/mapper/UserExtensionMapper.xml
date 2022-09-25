@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taoism.discipline.mapper.UserExtensionMapper">
+  <resultMap id="BaseResultMap" type="com.taoism.discipline.entity.UserExtensionEntity">
+    <id column="info_id" jdbcType="BIGINT" property="infoId" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="legal_name" jdbcType="VARCHAR" property="legalName" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="sect" jdbcType="VARCHAR" property="sect" />
+    <result column="master" jdbcType="VARCHAR" property="master" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="hat_date" jdbcType="TIMESTAMP" property="hatDate" />
+    <result column="receive_precepts_date" jdbcType="TIMESTAMP" property="receivePreceptsDate" />
+    <result column="receive_precepts_address" jdbcType="VARCHAR" property="receivePreceptsAddress" />
+    <result column="certificate_code" jdbcType="VARCHAR" property="certificateCode" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
+    <result column="last_update_date" jdbcType="TIMESTAMP" property="lastUpdateDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.taoism.discipline.entity.UserExtensionEntity">
+    <result column="speciality" jdbcType="LONGVARCHAR" property="speciality" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    info_id, openid, legal_name, gender, mobile, sect, master, address, hat_date, receive_precepts_date, 
+    receive_precepts_address, certificate_code, create_by, create_date, last_updated_by, 
+    last_update_date
+  </sql>
+
+  <select id="selectByOpenid" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_extension
+    where openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByOpenid" parameterType="java.lang.String">
+    delete from t_user_extension
+    where openid = #{openid,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.taoism.discipline.entity.UserExtensionEntity">
+    <selectKey keyProperty="infoId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_user_extension (openid, legal_name, gender, 
+      mobile, sect, master, 
+      address, hat_date, receive_precepts_date, 
+      receive_precepts_address, certificate_code, 
+      create_by, create_date, last_updated_by, 
+      last_update_date, speciality)
+    values (#{openid,jdbcType=VARCHAR}, #{legalName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{sect,jdbcType=VARCHAR}, #{master,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{hatDate,jdbcType=TIMESTAMP}, #{receivePreceptsDate,jdbcType=TIMESTAMP}, 
+      #{receivePreceptsAddress,jdbcType=VARCHAR}, #{certificateCode,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{speciality,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <update id="updateByOpenid" parameterType="com.taoism.discipline.entity.UserExtensionEntity">
+    update t_user_extension
+    set legal_name = #{legalName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      sect = #{sect,jdbcType=VARCHAR},
+      master = #{master,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      hat_date = #{hatDate,jdbcType=TIMESTAMP},
+      receive_precepts_date = #{receivePreceptsDate,jdbcType=TIMESTAMP},
+      receive_precepts_address = #{receivePreceptsAddress,jdbcType=VARCHAR},
+      certificate_code = #{certificateCode,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where openid = #{openid,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

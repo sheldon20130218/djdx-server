@@ -16,15 +16,8 @@ public class UserEntity {
 
     private String nickname;
 
-    private String gender;
-
-    private String city;
-
     @Column(name = "avatar_base64")
     private String avatarBase64;
-
-    @Column(name = "phone_num")
-    private String phoneNum;
 
     /**
      * 注册时间
@@ -92,34 +85,6 @@ public class UserEntity {
     }
 
     /**
-     * @return gender
-     */
-    public String getGender() {
-        return gender;
-    }
-
-    /**
-     * @param gender
-     */
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    /**
-     * @return city
-     */
-    public String getCity() {
-        return city;
-    }
-
-    /**
-     * @param city
-     */
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    /**
      * @return avatar_base64
      */
     public String getAvatarBase64() {
@@ -131,20 +96,6 @@ public class UserEntity {
      */
     public void setAvatarBase64(String avatarBase64) {
         this.avatarBase64 = avatarBase64;
-    }
-
-    /**
-     * @return phone_num
-     */
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    /**
-     * @param phoneNum
-     */
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
     }
 
     /**

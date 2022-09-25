@@ -1,7 +1,6 @@
 package com.taoism.discipline.controller;
 
 import com.github.benmanes.caffeine.cache.Cache;
-import com.taoism.discipline.entity.UserEntity;
 import com.taoism.discipline.model.UserInfo;
 import com.taoism.discipline.model.VxapiVerificationInfo;
 import com.taoism.discipline.service.LoginService;
@@ -29,20 +28,20 @@ public class RegisterController {
     @GetMapping("/register/{code}")
     public UserInfo register(@PathVariable("code") String code) {
     	
-    	UserEntity userEntity = new UserEntity();
+    	UserInfo info = new UserInfo();
 
 		//1.获取vxqqapi 验证信息
 		VxapiVerificationInfo vInfo = vxapiVerificationCache.get(code, k -> selectVinfo(k));
 		
 		//验证不通过,直接返回为null
 		if(null == vInfo.getOpenid()) {
-			return new UserInfo(userEntity);
+			return info;
 		}else {
-			userEntity = userService.register(vInfo.getOpenid());
+			info = userService.register(vInfo.getOpenid());
 			//登陆表记录一下
 			loginService.insert(vInfo.getOpenid());
 		}    		    		    	
-    	return new UserInfo(userEntity);
+    	return info;
     }
     
     private VxapiVerificationInfo selectVinfo(String code) {
