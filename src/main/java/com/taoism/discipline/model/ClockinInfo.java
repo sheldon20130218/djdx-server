@@ -1,6 +1,7 @@
 package com.taoism.discipline.model;
 
 import java.util.ArrayList;
+import java.sql.Date;
 
 public class ClockinInfo {
 	
@@ -10,7 +11,9 @@ public class ClockinInfo {
 	
 	private ArrayList<PreceptClockin> highRank = new ArrayList<PreceptClockin>();
 	
-	private String date;
+	private Date date;
+	
+	private String highRanktitle;
 
 	public ArrayList<PreceptClockin> getElementaryRank() {
 		return elementaryRank;
@@ -46,12 +49,20 @@ public class ClockinInfo {
 		this.highRank.addAll(highRank);
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+
+	public String getHighRanktitle() {
+		return highRanktitle;
+	}
+
+	public void setHighRanktitle(String highRanktitle) {
+		this.highRanktitle = highRanktitle;
+	}
+
 }

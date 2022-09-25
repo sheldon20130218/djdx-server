@@ -41,26 +41,10 @@ public class ClockinService implements ClockinImpl{
 		List<PreceptEntity> list = preceptMapper.selectByPreceptIds(ids);
 		List<PreceptClockin> clockinInfoList = new ArrayList<PreceptClockin>();
 		for (PreceptEntity entity : list) {
-			PreceptClockin preceptClockin = this.toPreceptClockin(entity);
+			PreceptClockin preceptClockin = this.toPreceptClockin(entity,true);
 			clockinInfoList.add(preceptClockin);
 		}
 		return clockinInfoList;
-	}
-
-	@Override
-	public ClockinInfo selectByDate(String openid, Date date) {
-		// TODO Auto-generated method stub
-		StrategyEntity strategyEntity = strategyMapper.selectByDate(date);
-		
-		Long[] ids = stringToArray(strategyEntity.getPreceptIds());
-		List<PreceptEntity> list = preceptMapper.selectByPreceptIds(ids);
-		List<PreceptClockin> elementaryRank = new ArrayList<PreceptClockin>();
-		List<PreceptClockin> middleRank = new ArrayList<PreceptClockin>();
-		List<PreceptClockin> highRank = new ArrayList<PreceptClockin>();
-		
-		
-		
-		return null;
 	}
 	
 	private void insert(String openid, Date date, String preceptIds, String preceptDataType) {
@@ -86,15 +70,90 @@ public class ClockinService implements ClockinImpl{
 		return idArray;
 	}
 	
-	private PreceptClockin toPreceptClockin(PreceptEntity entity) {
+	private PreceptClockin toPreceptClockin(PreceptEntity entity,Boolean isClockin) {
 		PreceptClockin preceptClockin = new PreceptClockin();
-		preceptClockin.setIsClockin(true);
+		preceptClockin.setIsClockin(isClockin);
 		preceptClockin.setPrecept(entity.getContent());
 		preceptClockin.setPreceptDataType(entity.getDataType());
 		preceptClockin.setPreceptId(entity.getPreceptId());
 		return preceptClockin;
 	}
 
-
-    
+	@Override
+	public ClockinInfo getHistoryClockinInfo(String openid, Date date) {
+		ClockinInfo clockinInfo = new ClockinInfo();
+		//1.按时间、openid获取打卡信息
+		List<PreceptClockinEntity> preceptClockinEntitylist =preceptClockinMapper.selectListByParams(date, openid);
+		if(null == preceptClockinEntitylist || preceptClockinEntitylist.size() == 0) {
+			return clockinInfo;
+		}
+		
+		String clockinPreceptIdsStr = ",";
+		for (PreceptClockinEntity preceptClockinEntity : preceptClockinEntitylist) {
+			clockinPreceptIdsStr = clockinPreceptIdsStr + preceptClockinEntity.getPreceptIds() + ",";
+		}
+		
+		//2.按时间获取策略信息
+		StrategyEntity strategyEntity = strategyMapper.selectByDate(date);
+		if(null == strategyEntity ||  strategyEntity.getPreceptIds().isBlank()) {
+			return clockinInfo;
+		}
+		String strategyPrecept = strategyEntity.getPreceptIds();
+		String[] strategyPreceptIdsStr = strategyPrecept.split(",");
+		Long[] strategyPreceptIds = new Long[strategyPreceptIdsStr.length];
+		for(int i = 0;i<strategyPreceptIdsStr.length;i++) {
+			strategyPreceptIds[i] = Long.parseLong(strategyPreceptIdsStr[i]);
+		}
+		
+		//3.按照策略获取所有戒文信息
+		List<PreceptEntity> list = preceptMapper.selectByPreceptIds(strategyPreceptIds);
+		if(null == list || list.size() == 0) {
+			return clockinInfo;
+		}
+		
+		ArrayList<PreceptClockin> elementaryRank = new ArrayList<PreceptClockin>();
+		
+		ArrayList<PreceptClockin> middleRank = new ArrayList<PreceptClockin>();
+		
+		ArrayList<PreceptClockin> highRank = new ArrayList<PreceptClockin>();
+		
+		for (PreceptEntity entity : list) {
+			String subStr = "," + entity.getPreceptId().toString() + ",";
+			Boolean isClockin = clockinPreceptIdsStr.indexOf(subStr) > -1;
+			
+			PreceptClockin preceptClockin = this.toPreceptClockin(entity,isClockin);
+			if("1".equals(entity.getDataType().trim())) {
+				elementaryRank.add(preceptClockin);
+			}
+			if("2".equals(entity.getDataType().trim())) {
+				middleRank.add(preceptClockin);
+			}
+			if("3".equals(entity.getDataType().trim())) {
+				highRank.add(preceptClockin);
+			}
+		}
+		
+		clockinInfo.setElementaryRank(elementaryRank);
+		clockinInfo.setMiddleRank(middleRank);
+		clockinInfo.setHighRank(highRank);
+		clockinInfo.setHighRank(highRank);
+		
+		clockinInfo.setDate(date);
+		
+		return clockinInfo;
+	}
+	
+	
+	private String getHighRankTitle(List<PreceptEntity> list) {
+		String title = null;
+		for (PreceptEntity entity : list) {
+			if("3".equals(entity.getDataType())) {
+				
+			}
+		}
+		
+		return title;
+		
+	}
+	
 }

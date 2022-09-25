@@ -10,6 +10,6 @@ public interface ClockinImpl {
 
 	List<PreceptClockin> Clockin(String openid,Date date, String preceptIds,String preceptDataType);
 	
-	ClockinInfo selectByDate(String openid,Date date);
+	ClockinInfo getHistoryClockinInfo(String openid, Date date);
 	
 }

@@ -25,21 +25,18 @@ public class ClockinController {
 	
 	@PostMapping("/clockin/elementary")
     public List<PreceptClockin> getElementary(@RequestHeader(value = "token") String token,Long time,String preceptIds) {
-    	//return preceptService.preceptsForToday();
 		String openid = TokenUtil.getOpenid(token);
 		return clockinService.Clockin(openid, new Date(time), preceptIds,"1");
     }
 	
 	@PostMapping("/clockin/intermediate")
     public List<PreceptClockin> getIntermediate(@RequestHeader(value = "token") String token, Long time,String preceptIds) {
-    	//return preceptService.preceptsForToday();
 		String openid = TokenUtil.getOpenid(token);
 		return clockinService.Clockin(openid,new Date(time), preceptIds,"2");
     }
 	
 	@PostMapping("/clockin/superior")
     public List<PreceptClockin> getSuperior(@RequestHeader(value = "token") String token,Long time,String preceptIds) {
-    	//return preceptService.preceptsForToday();
 		String openid = TokenUtil.getOpenid(token);
 		return clockinService.Clockin(openid, new Date(time), preceptIds,"3");
     }
@@ -47,20 +44,11 @@ public class ClockinController {
 	
 	
 	@PostMapping("/clockin/history")
-    public ClockinInfo getPreceptsForDate(@RequestHeader(value = "token") String token, Date date) {
+    public ClockinInfo getHistory(@RequestHeader(value = "token") String token, Long time) {
 		String openid = TokenUtil.getOpenid(token);
+		ClockinInfo clockinInfo = clockinService.getHistoryClockinInfo(openid,new Date(time));
 		
-		//return clockinService.Clockin(openid, DateUtil.toSqlDate(date), preceptIds, openid);
-		return null;
+		return clockinInfo;
     }
-//	
-//	@PostMapping("/clockin/")
-//    public ClockinInfo getPreceptsForDate(@RequestHeader(value = "token") String token,Date date) {
-//    	//return preceptService.preceptsForToday();
-//		return null;
-//    }
-	
-	
-	
 
 }
