@@ -84,9 +84,6 @@ public class ClockinService implements ClockinImpl{
 		ClockinInfo clockinInfo = new ClockinInfo();
 		//1.按时间、openid获取打卡信息
 		List<PreceptClockinEntity> preceptClockinEntitylist =preceptClockinMapper.selectListByParams(date, openid);
-		if(null == preceptClockinEntitylist || preceptClockinEntitylist.size() == 0) {
-			return clockinInfo;
-		}
 		
 		String clockinPreceptIdsStr = ",";
 		for (PreceptClockinEntity preceptClockinEntity : preceptClockinEntitylist) {
@@ -101,8 +98,8 @@ public class ClockinService implements ClockinImpl{
 		String strategyPrecept = strategyEntity.getPreceptIds();
 		String[] strategyPreceptIdsStr = strategyPrecept.split(",");
 		Long[] strategyPreceptIds = new Long[strategyPreceptIdsStr.length];
-		for(int i = 0;i<strategyPreceptIdsStr.length;i++) {
-			strategyPreceptIds[i] = Long.parseLong(strategyPreceptIdsStr[i]);
+		for(int i = 0; i<strategyPreceptIdsStr.length; i++) {
+			strategyPreceptIds[i] = Long.parseLong(strategyPreceptIdsStr[i].trim());
 		}
 		
 		//3.按照策略获取所有戒文信息

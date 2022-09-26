@@ -14,5 +14,7 @@ public interface StrategyMapper{
 
     void insert(StrategyEntity userEntity);
     
+    void deleteAll();
+    
 
 }

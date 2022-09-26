@@ -16,9 +16,13 @@
   <insert id="insert" parameterType="com.taoism.discipline.entity.StrategyEntity">
     insert into t_strategy(date, precept_ids, create_date, create_by)
     values (#{date, jdbcType=DATE},
-            #{precept_ids, jdbcType=VARCHAR},
-            #{create_date, jdbcType=TIMESTAMP},
-            #{create_by, jdbcType=VARCHAR}
+            #{preceptIds, jdbcType=VARCHAR},
+            #{createDate, jdbcType=TIMESTAMP},
+            #{createBy, jdbcType=VARCHAR})
   </insert>
+  
+  <delete id="deleteAll">
+  	delete from t_strategy
+  </delete>
 
 </mapper>
