@@ -41,7 +41,6 @@ public class ClockinController {
     }
 	
 	
-	
 	@PostMapping("/clockin/history")
     public ClockinInfo getHistory(@RequestHeader(value = "token") String token, Long time) {
 		String openid = TokenUtil.getOpenid(token);

@@ -48,6 +48,11 @@ public class UserExtensionEntity implements Serializable {
      * 冠巾时间
      */
     private Date hatDate;
+    
+    /**
+     * 冠巾
+     */
+    private String hatAddress;
 
     /**
      * 受戒时间
@@ -226,4 +231,12 @@ public class UserExtensionEntity implements Serializable {
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
     }
+
+	public String getHatAddress() {
+		return hatAddress;
+	}
+
+	public void setHatAddress(String hatAddress) {
+		this.hatAddress = hatAddress;
+	}
 }

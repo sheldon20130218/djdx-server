@@ -87,6 +87,16 @@ public class ClockinService implements ClockinImpl{
 		
 		String clockinPreceptIdsStr = ",";
 		for (PreceptClockinEntity preceptClockinEntity : preceptClockinEntitylist) {
+			if("1".equals(preceptClockinEntity.getPreceptDataType())) {
+				clockinInfo.setElementaryClockIn(true);
+			}
+			if("2".equals(preceptClockinEntity.getPreceptDataType())) {
+				clockinInfo.setMiddleClockIn(true);
+			}
+			if("3".equals(preceptClockinEntity.getPreceptDataType())) {
+				clockinInfo.setHighClockIn(true);
+			}
+			
 			clockinPreceptIdsStr = clockinPreceptIdsStr + preceptClockinEntity.getPreceptIds() + ",";
 		}
 		
@@ -104,6 +114,7 @@ public class ClockinService implements ClockinImpl{
 		
 		//3.按照策略获取所有戒文信息
 		List<PreceptEntity> list = preceptMapper.selectByPreceptIds(strategyPreceptIds);
+		System.out.println(list.size());
 		if(null == list || list.size() == 0) {
 			return clockinInfo;
 		}
@@ -132,7 +143,6 @@ public class ClockinService implements ClockinImpl{
 		
 		clockinInfo.setElementaryRank(elementaryRank);
 		clockinInfo.setMiddleRank(middleRank);
-		clockinInfo.setHighRank(highRank);
 		clockinInfo.setHighRank(highRank);
 		
 		clockinInfo.setDate(date);

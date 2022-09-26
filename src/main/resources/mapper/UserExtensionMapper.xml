@@ -11,6 +11,7 @@
     <result column="master" jdbcType="VARCHAR" property="master" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="hat_date" jdbcType="TIMESTAMP" property="hatDate" />
+    <result column="hat_address" jdbcType="VARCHAR" property="hatAddress" />
     <result column="receive_precepts_date" jdbcType="TIMESTAMP" property="receivePreceptsDate" />
     <result column="receive_precepts_address" jdbcType="VARCHAR" property="receivePreceptsAddress" />
     <result column="certificate_code" jdbcType="VARCHAR" property="certificateCode" />
@@ -18,18 +19,16 @@
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
     <result column="last_update_date" jdbcType="TIMESTAMP" property="lastUpdateDate" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.taoism.discipline.entity.UserExtensionEntity">
     <result column="speciality" jdbcType="LONGVARCHAR" property="speciality" />
   </resultMap>
   
   <sql id="Base_Column_List">
-    info_id, openid, legal_name, gender, mobile, sect, master, address, hat_date, receive_precepts_date, 
+    info_id, openid, legal_name, gender, mobile, sect, master, address, hat_date, hat_address, receive_precepts_date, 
     receive_precepts_address, certificate_code, create_by, create_date, last_updated_by, 
-    last_update_date
+    last_update_date,speciality
   </sql>
 
-  <select id="selectByOpenid" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_user_extension
@@ -47,14 +46,14 @@
     </selectKey>
     insert into t_user_extension (openid, legal_name, gender, 
       mobile, sect, master, 
-      address, hat_date, receive_precepts_date, 
+      address, hat_date, hat_address, receive_precepts_date, 
       receive_precepts_address, certificate_code, 
       create_by, create_date, last_updated_by, 
       last_update_date, speciality)
     values (#{openid,jdbcType=VARCHAR}, #{legalName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{sect,jdbcType=VARCHAR}, #{master,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{hatDate,jdbcType=TIMESTAMP}, #{receivePreceptsDate,jdbcType=TIMESTAMP}, 
-      #{receivePreceptsAddress,jdbcType=VARCHAR}, #{certificateCode,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{hatDate,jdbcType=TIMESTAMP}, #{hatAddress,jdbcType=VARCHAR},
+      #{receivePreceptsDate,jdbcType=TIMESTAMP}, #{receivePreceptsAddress,jdbcType=VARCHAR}, #{certificateCode,jdbcType=VARCHAR}, 
       #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
       #{lastUpdateDate,jdbcType=TIMESTAMP}, #{speciality,jdbcType=LONGVARCHAR})
   </insert>
@@ -68,6 +67,7 @@
       master = #{master,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       hat_date = #{hatDate,jdbcType=TIMESTAMP},
+      hat_address = #{hatAddress,jdbcType=VARCHAR},
       receive_precepts_date = #{receivePreceptsDate,jdbcType=TIMESTAMP},
       receive_precepts_address = #{receivePreceptsAddress,jdbcType=VARCHAR},
       certificate_code = #{certificateCode,jdbcType=VARCHAR},

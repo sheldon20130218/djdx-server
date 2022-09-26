@@ -2,10 +2,13 @@ package com.taoism.discipline.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
+import com.taoism.discipline.entity.UserExtensionEntity;
 import com.taoism.discipline.model.UserInfo;
 import com.taoism.discipline.service.UserService;
 import com.taoism.discipline.utils.TokenUtil;
@@ -32,4 +35,14 @@ public class UserController {
 		
 		return info;
 	}
+	
+	@PostMapping("/user/updateExtension")
+	public UserInfo updateExtension(@RequestHeader(value = "token") String token, @RequestBody JSONObject jsonObj) {
+		String openid = TokenUtil.getOpenid(token);
+		
+		UserInfo info = userService.updateExtension(openid,jsonObj);
+		return info;
+	}
+	
+	
 }

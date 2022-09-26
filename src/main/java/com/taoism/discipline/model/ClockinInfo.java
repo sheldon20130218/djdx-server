@@ -13,6 +13,15 @@ public class ClockinInfo {
 	
 	private Date date;
 	
+	//初真打卡标志
+	private Boolean elementaryClockIn = false;
+	
+	//中级打卡标志
+	private Boolean middleClockIn = false;
+	
+	//高级打卡标志
+	private Boolean highClockIn = false;
+	
 	private String highRanktitle;
 
 	public ArrayList<PreceptClockin> getElementaryRank() {
@@ -65,4 +74,28 @@ public class ClockinInfo {
 		this.highRanktitle = highRanktitle;
 	}
 
+	public Boolean getElementaryClockIn() {
+		return elementaryClockIn;
+	}
+
+	public void setElementaryClockIn(Boolean elementaryClockIn) {
+		this.elementaryClockIn = elementaryClockIn;
+	}
+
+	public Boolean getMiddleClockIn() {
+		return middleClockIn;
+	}
+
+	public void setMiddleClockIn(Boolean middleClockIn) {
+		this.middleClockIn = middleClockIn;
+	}
+
+	public Boolean getHighClockIn() {
+		return highClockIn;
+	}
+
+	public void setHighClockIn(Boolean highClockIn) {
+		this.highClockIn = highClockIn;
+	}
+	
 }

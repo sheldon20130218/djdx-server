@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.taoism.discipline.entity.UserEntity;
 import com.taoism.discipline.entity.UserExtensionEntity;
 import com.taoism.discipline.mapper.UserExtensionMapper;
@@ -78,10 +79,35 @@ public class UserService implements UserImpl {
 		return new UserInfo(entity,userExtensionEntity);
 	}
 
-
+	@Override
 	public UserInfo selectUserInfo(String openid) {
 		UserEntity entity = userMapper.selectByOpenid(openid);
 		UserExtensionEntity userExtensionEntity = userExtensionMapper.selectByOpenid(openid);
 		return new UserInfo(entity,userExtensionEntity);
+	}
+
+
+	@Override
+	public UserInfo updateExtension(String openid, JSONObject jsonObj) {
+		UserEntity entity = userMapper.selectByOpenid(openid);
+		UserExtensionEntity userExtensionEntity = userExtensionMapper.selectByOpenid(openid);
+		
+		userExtensionEntity.setLegalName(jsonObj.getString("legalName"));
+		userExtensionEntity.setGender(jsonObj.getString("gender"));
+		userExtensionEntity.setMobile(jsonObj.getString("phoneNum"));
+		userExtensionEntity.setSect(jsonObj.getString("sect"));
+		userExtensionEntity.setMaster(jsonObj.getString("master"));
+		userExtensionEntity.setAddress(jsonObj.getString("address"));
+		userExtensionEntity.setHatDate(new Date(Long.parseLong(jsonObj.getString("hatDate"))));
+		userExtensionEntity.setHatAddress(jsonObj.getString("hatAddress"));
+		userExtensionEntity.setReceivePreceptsDate(new Date(Long.parseLong(jsonObj.getString("receivePreceptsDate"))));
+		userExtensionEntity.setReceivePreceptsAddress(jsonObj.getString("receivePreceptsAddress"));
+		userExtensionEntity.setCertificateCode(jsonObj.getString("certificateCode"));
+		userExtensionEntity.setSpeciality(jsonObj.getString("specialty"));
+		
+		userExtensionMapper.updateByOpenid(userExtensionEntity);
+		UserInfo info = new UserInfo(entity,userExtensionEntity);
+		
+		return info;
 	}
 }

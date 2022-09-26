@@ -24,10 +24,16 @@ public class UserInfo {
 		this.sect = userExtensionEntity.getSect();
 		this.master = userExtensionEntity.getMaster();
 		this.address = userExtensionEntity.getAddress();
-		this.hatDate = userExtensionEntity.getHatDate();
-		this.receivePreceptsDate = userExtensionEntity.getReceivePreceptsDate();
+		if(null != userExtensionEntity.getHatDate()) {
+			this.hatDate = userExtensionEntity.getHatDate().getTime();
+		}
+		this.hatAddress = userExtensionEntity.getHatAddress();
+		if(null != userExtensionEntity.getReceivePreceptsDate()) {
+			this.receivePreceptsDate = userExtensionEntity.getReceivePreceptsDate().getTime();
+		}
 		this.receivePreceptsAddress = userExtensionEntity.getReceivePreceptsAddress();
 		this.certificateCode = userExtensionEntity.getCertificateCode();
+		this.specialty = userExtensionEntity.getSpeciality();
 	}
 	
     private Integer uid;
@@ -52,13 +58,17 @@ public class UserInfo {
 
     private String address;
 
-    private Date hatDate;
+    private Long hatDate;
+    
+    private String hatAddress;
 
-    private Date receivePreceptsDate;
+    private Long receivePreceptsDate;
 
     private String receivePreceptsAddress;
 
     private String certificateCode;
+    
+    private String specialty;
     
     /**
      * @return uid
@@ -191,19 +201,19 @@ public class UserInfo {
 		this.address = address;
 	}
 
-	public Date getHatDate() {
+	public Long getHatDate() {
 		return hatDate;
 	}
 
-	public void setHatDate(Date hatDate) {
+	public void setHatDate(Long hatDate) {
 		this.hatDate = hatDate;
 	}
 
-	public Date getReceivePreceptsDate() {
+	public Long getReceivePreceptsDate() {
 		return receivePreceptsDate;
 	}
 
-	public void setReceivePreceptsDate(Date receivePreceptsDate) {
+	public void setReceivePreceptsDate(Long receivePreceptsDate) {
 		this.receivePreceptsDate = receivePreceptsDate;
 	}
 
@@ -222,5 +232,21 @@ public class UserInfo {
 	public void setCertificateCode(String certificateCode) {
 		this.certificateCode = certificateCode;
 	}
-    
+
+	public String getHatAddress() {
+		return hatAddress;
+	}
+
+	public void setHatAddress(String hatAddress) {
+		this.hatAddress = hatAddress;
+	}
+
+	public String getSpeciality() {
+		return specialty;
+	}
+
+	public void setSpeciality(String speciality) {
+		this.specialty = speciality;
+	}
+	
 }

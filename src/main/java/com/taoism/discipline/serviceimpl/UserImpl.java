@@ -1,5 +1,6 @@
 package com.taoism.discipline.serviceimpl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.taoism.discipline.entity.UserEntity;
 import com.taoism.discipline.model.UserInfo;
 
@@ -14,5 +15,7 @@ public interface UserImpl {
 	UserInfo modifyUserNickname(String openid, String nickname, String avatarBase64);
 	
 	UserInfo selectUserInfo(String openid);
+
+	UserInfo updateExtension(String openid, JSONObject jsonObj);
 
 }
