@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.taoism.discipline.entity.PreceptClockinEntity;
 import com.taoism.discipline.entity.PreceptEntity;
 import com.taoism.discipline.entity.StrategyEntity;
+import com.taoism.discipline.enumtype.SubType;
 import com.taoism.discipline.mapper.PreceptClockinMapper;
 import com.taoism.discipline.mapper.PreceptMapper;
 import com.taoism.discipline.mapper.StrategyMapper;
@@ -114,7 +115,7 @@ public class ClockinService implements ClockinImpl{
 		
 		//3.按照策略获取所有戒文信息
 		List<PreceptEntity> list = preceptMapper.selectByPreceptIds(strategyPreceptIds);
-		System.out.println(list.size());
+		//System.out.println(list.size());
 		if(null == list || list.size() == 0) {
 			return clockinInfo;
 		}
@@ -141,26 +142,16 @@ public class ClockinService implements ClockinImpl{
 			}
 		}
 		
+		String type = list.get(list.size()-1).getSubType();
+		String highRankTitle = SubType.getSubType(type);
+		
 		clockinInfo.setElementaryRank(elementaryRank);
 		clockinInfo.setMiddleRank(middleRank);
 		clockinInfo.setHighRank(highRank);
+		clockinInfo.setHighRankTitle(highRankTitle);
 		
-		clockinInfo.setDate(date);
+		clockinInfo.setDate(date);	
 		
 		return clockinInfo;
-	}
-	
-	
-	private String getHighRankTitle(List<PreceptEntity> list) {
-		String title = null;
-		for (PreceptEntity entity : list) {
-			if("3".equals(entity.getDataType())) {
-				
-			}
-		}
-		
-		return title;
-		
-	}
-	
+	}	
 }

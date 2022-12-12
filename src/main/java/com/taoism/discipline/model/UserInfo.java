@@ -241,12 +241,12 @@ public class UserInfo {
 		this.hatAddress = hatAddress;
 	}
 
-	public String getSpeciality() {
+	public String getSpecialty() {
 		return specialty;
 	}
 
-	public void setSpeciality(String speciality) {
-		this.specialty = speciality;
+	public void setSpecialty(String specialty) {
+		this.specialty = specialty;
 	}
 	
 }

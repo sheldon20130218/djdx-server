@@ -22,7 +22,7 @@ public class ClockinInfo {
 	//高级打卡标志
 	private Boolean highClockIn = false;
 	
-	private String highRanktitle;
+	private String highRankTitle;
 
 	public ArrayList<PreceptClockin> getElementaryRank() {
 		return elementaryRank;
@@ -66,12 +66,12 @@ public class ClockinInfo {
 		this.date = date;
 	}
 
-	public String getHighRanktitle() {
-		return highRanktitle;
+	public String getHighRankTitle() {
+		return highRankTitle;
 	}
 
-	public void setHighRanktitle(String highRanktitle) {
-		this.highRanktitle = highRanktitle;
+	public void setHighRankTitle(String highRankTitle) {
+		this.highRankTitle = highRankTitle;
 	}
 
 	public Boolean getElementaryClockIn() {
